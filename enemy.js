@@ -20,6 +20,10 @@ class Enemy {
 
     } 
 
+    // get enemyBullets() {
+    //     return this.enemyBullets
+    // }
+
     draw() {
 
         this.ctx.drawImage(this.image, this.posX, this.posY, this.width, this.heigth)
@@ -55,9 +59,6 @@ class Enemy {
             if(obs.posY>= this.gameHeigth) {
             this.enemyBullets.splice(idx, 1)
             } 
-        })
-
-        console.log(this.enemyBullets)
-        
+        })        
     }
 }

@@ -38,6 +38,8 @@ const Game = {
             this.drawAll()
             this.moveAll()
             this.clearAll()
+            this.isCollissionPlayer()
+            this.isCollisionEnemy()
 
         },1000/this.fps)
     
@@ -49,7 +51,6 @@ const Game = {
         this.player = new Player(this.ctx, this.canvas.width, this.canvas.height, this.keys)
         this.enemy = new Enemy(this.ctx, this.canvas.width, this.canvas.height)
         this.leftEnemy = new FlyingEnemie(this.ctx, "images/angry_icon.png", this.canvas.width, this.canvas.height, 0, this.height/2-25) 
-        console.log(this.height/2-25)
         this.rigthEnemy = new FlyingEnemie(this.ctx, "images/words_angry.png", this.canvas.width, this.canvas.height, this.width-50, this.height/2-25)
     },
 
@@ -74,7 +75,41 @@ const Game = {
     },
 
     clearAll: function() {
-        console.log(this.enemy.enemyBullets)
+        //console.log(this.enemy.enemyBullets)
         this.enemy.clearEnemyBullets()
+        this.player.clearBullets()
+    },
+
+    isCollissionAll: function() {
+
+        
+    },
+
+    isCollissionPlayer : function() {
+        
+        this.player.bullets.some(bullet => {
+
+            if ((bullet.posX + bullet.width > this.enemy.posX) &&
+                (bullet.posX < this.enemy.posX + this.enemy.width) &&
+                (bullet.posY < this.enemy.posY + this.enemy.heigth) &&
+                (bullet.posY + bullet.heigth > this.enemy.posY)){
+                console.log("Colisión")
+            }
+
+        })
+
+    },
+
+    isCollisionEnemy: function() {
+
+        this.enemy.enemyBullets.some(bullet => {
+
+            if ((bullet.posX + bullet.width > this.player.posX)&&
+                (bullet.posX < this.player.posX + this.player.width) && 
+                (bullet.posY + bullet.width > this.player.posY) &&
+                (bullet.posY < this.player.posY + this.player.height)) {
+                    console.log("Estas muerto")
+                }
+        })
     }
 }
