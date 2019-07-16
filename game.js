@@ -40,6 +40,7 @@ const Game = {
             this.clearAll()
             this.isCollissionPlayer()
             this.isCollisionEnemy()
+            this.isCollissionFlyingEnemies()
 
         },1000/this.fps)
     
@@ -111,5 +112,24 @@ const Game = {
                     console.log("Estas muerto")
                 }
         })
+    },
+
+    isCollissionFlyingEnemies: function() {
+
+        if ((this.leftEnemy.posX + this.leftEnemy.width > this.player.posX) &&
+            (this.leftEnemy.posX < this.player.posX + this.player.width) &&
+            (this.leftEnemy.posY + this.leftEnemy.width > this.player.posY) &&
+            (this.leftEnemy.posY < this.player.posY + this.player.height)) {
+
+                console.log("tocado")
+        }
+
+        if ((this.rigthEnemy.posX + this.rigthEnemy.width > this.player.posX) &&
+        (this.rigthEnemy.posX < this.player.posX + this.player.width) &&
+        (this.rigthEnemy.posY + this.rigthEnemy.width > this.player.posY) &&
+        (this.rigthEnemy.posY < this.player.posY + this.player.height)) {
+
+            console.log("ay qué dolor")
+        }
     }
 }
