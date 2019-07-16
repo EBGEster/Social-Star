@@ -38,11 +38,9 @@ const Game = {
             this.drawAll()
             this.moveAll()
             this.clearAll()
-            this.isCollissionPlayer()
-            this.isCollisionEnemy()
-            this.isCollissionFlyingEnemies()
-            this.removePlayerBullets()
-            this.removeEnemyBullets()
+            this.isCollissionAll()
+            this.checkLife()
+            
 
         },1000/this.fps)
     
@@ -83,8 +81,23 @@ const Game = {
         this.player.clearBullets()
     },
 
-    isCollissionAll: function() {
+    checkLife: function() {
 
+        if (this.player.pLife < 0){
+            this.gameOver()
+        }
+
+        if (this.enemy.eLife < 0){
+            this.playerWin()
+        }
+    },
+
+    isCollissionAll: function() {
+        this.isCollissionPlayer()
+        this.isCollisionEnemy()
+        this.isCollissionFlyingEnemies()
+        this.removeEnemyBullets()
+        this.removePlayerBullets()
         
     },
 
@@ -98,7 +111,8 @@ const Game = {
                 (bullet.posY + bullet.heigth > this.enemy.posY)){
                 console.log("Colisión")
                 
-                return true
+                this.enemy.eLife -= 1
+                console.log("Enemy life" , this.enemy.eLife)
             }
 
             
@@ -130,6 +144,9 @@ const Game = {
                 (bullet.posY + bullet.width > this.player.posY) &&
                 (bullet.posY < this.player.posY + this.player.height)) {
                     console.log("Estas muerto")
+
+                    this.player.pLife -= 1
+                    console.log(this.player.pLife)
                 }
         })
     },
@@ -164,5 +181,13 @@ const Game = {
 
             console.log("ay qué dolor")
         }
+    },
+
+    playerWin: function() {
+
+    },
+
+    gameOver: function() {
+        clearInterval(this.interval)
     }
 }

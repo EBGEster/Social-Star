@@ -18,6 +18,7 @@ class Enemy {
 
         this.enemyBullets = []
 
+        this.eLife = 10
     } 
 
     // get enemyBullets() {

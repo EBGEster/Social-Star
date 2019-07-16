@@ -22,11 +22,9 @@ class Player {
 
         this.bullets = []
 
-    }
+        this.pLife = 5
 
-    // get bullets(){
-    //     return this.bullets
-    // }
+    }
 
     draw() {
         this.ctx.drawImage(this.image, this.posX, this.posY, this.width, this.height)
@@ -52,8 +50,8 @@ class Player {
         }
 
         if (this.keys.TOP_KEY.down && this.posY >= this.posY0) {
-            this.posY -=10
-            this.velY -=5
+            this.posY -=15
+            this.velY -=8
         }
 
         this.bullets.forEach(bullet => bullet.move())
@@ -79,24 +77,17 @@ class Player {
             switch (e.keyCode) {
                 case this.keys.TOP_KEY.key:
                     this.keys.TOP_KEY.down = true
-                    // if (this.posY >= this.posY0) {
-                    //     this.posY -=20
-                    //     this.velY -=10
-                    // }
+
                     break
 
                 case this.keys.LEFT_KEY.key:
                     this.keys.LEFT_KEY.down = true
-                    // if (this.posX >0){
-                    //     this.posX -=20
-                    // }
+
                     break
 
                 case this.keys.RIGHT_KEY.key:
                     this.keys.RIGHT_KEY.down = true
-                //    if (this.posX < this.gameWidth - this.width){
-                //         this.posX +=20
-                //     }
+
                     break
 
                 case this.keys.SPACE:
@@ -157,3 +148,4 @@ class Player {
     //     }
     // }
 }
+
