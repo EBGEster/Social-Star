@@ -43,6 +43,19 @@ class Player {
             this.posY = this.posY0
         }
 
+        if (this.keys.RIGHT_KEY.down && this.posX < this.gameWidth - this.width) {
+            this.posX +=10
+        }
+
+        if (this.keys.LEFT_KEY.down && this.posX >0){
+            this.posX -=10
+        }
+
+        if (this.keys.TOP_KEY.down && this.posY >= this.posY0) {
+            this.posY -=10
+            this.velY -=5
+        }
+
         this.bullets.forEach(bullet => bullet.move())
     }
 
@@ -61,50 +74,86 @@ class Player {
         
     }
 
-    
-
     setListeners() {
         document.onkeydown = (e) => {
-            switch(e.keyCode){
-                case this.keys.TOP_KEY: 
-                    if (this.posY >= this.posY0) {
-                        this.posY -=20
-                        this.velY -=10
-                    }   
+            switch (e.keyCode) {
+                case this.keys.TOP_KEY.key:
+                    this.keys.TOP_KEY.down = true
+                    // if (this.posY >= this.posY0) {
+                    //     this.posY -=20
+                    //     this.velY -=10
+                    // }
                     break
 
-                case this.keys.LEFT_KEY: 
-                    if (this.posX >0){
-                        this.posX -=20
-                    }
+                case this.keys.LEFT_KEY.key:
+                    this.keys.LEFT_KEY.down = true
+                    // if (this.posX >0){
+                    //     this.posX -=20
+                    // }
                     break
 
-                case this.keys.RIGTH_KEY:
-                    if (this.posX < this.gameWidth - this.width){
-                        this.posX +=20
-                    }
+                case this.keys.RIGHT_KEY.key:
+                    this.keys.RIGHT_KEY.down = true
+                //    if (this.posX < this.gameWidth - this.width){
+                //         this.posX +=20
+                //     }
                     break
-
-                // case this.keys.RIGTH_KEY && this.keys.TOP_KEY:
-                //     this.posX +=30
-                //     this.velY += this.gravity
-                //     this.posY +=this.velY
-                    
-
-                //     break
-
-                // case this.keys.LEFT_KEY && this.keys.TOP_KEY:
-                //     this.posX -=20
-                //     this.posY +=20
-                //     this.velY += this.gravity
-
-                //     break   
 
                 case this.keys.SPACE:
                     this.shoot()
+
+                    break
+            }
+        }
+
+        document.onkeyup = (e) => {
+            switch (e.keyCode) {
+                case this.keys.TOP_KEY.key:
+                    this.keys.TOP_KEY.down = false
+   
                     break
 
+                case this.keys.LEFT_KEY.key:
+                     this.keys.LEFT_KEY.down = false
+
+                        break
+
+                case this.keys.RIGHT_KEY.key:
+                     this.keys.RIGHT_KEY.down = false
+    
+                        break
             }
         }
     }
+    
+
+    // setListeners() {
+    //     document.onkeydown = (e) => {
+    //         switch(e.keyCode){
+    //             case this.keys.TOP_KEY: 
+    //                 if (this.posY >= this.posY0) {
+    //                     this.posY -=20
+    //                     this.velY -=10
+    //                 }   
+    //                 break
+
+    //             case this.keys.LEFT_KEY: 
+    //                 if (this.posX >0){
+    //                     this.posX -=20
+    //                 }
+    //                 break
+
+    //             case this.keys.RIGHT_KEY:
+    //                 if (this.posX < this.gameWidth - this.width){
+    //                     this.posX +=20
+    //                 }
+    //                 break
+
+    //             case this.keys.SPACE:
+    //                 this.shoot()
+    //                 break
+
+    //         }
+    //     }
+    // }
 }

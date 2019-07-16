@@ -6,9 +6,9 @@ const Game = {
     fps: 60,
     framesCounter: 0,
     keys: {
-        TOP_KEY: 38,
-        LEFT_KEY: 37,
-        RIGTH_KEY: 39,
+        TOP_KEY: { key: 38, down: false},
+        LEFT_KEY: { key: 37, down: false},
+        RIGHT_KEY: {key: 39, down: false},
         SPACE: 32
     },
 
