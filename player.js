@@ -35,7 +35,7 @@ class Player {
 
     move() {
                 
-        if (this.posY <= this.posY0) {
+        if (this.posY < this.posY0) {
             this.posY += this.velY
             this.velY += this.gravity
         } else {

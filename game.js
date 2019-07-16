@@ -41,6 +41,8 @@ const Game = {
             this.isCollissionPlayer()
             this.isCollisionEnemy()
             this.isCollissionFlyingEnemies()
+            this.removePlayerBullets()
+            this.removeEnemyBullets()
 
         },1000/this.fps)
     
@@ -95,10 +97,28 @@ const Game = {
                 (bullet.posY < this.enemy.posY + this.enemy.heigth) &&
                 (bullet.posY + bullet.heigth > this.enemy.posY)){
                 console.log("Colisión")
+                
+                return true
             }
+
+            
 
         })
 
+    },
+
+    removePlayerBullets: function() {
+
+        this.player.bullets.forEach((bullet, idx) => {
+
+            if ((bullet.posX + bullet.width > this.enemy.posX) &&
+            (bullet.posX < this.enemy.posX + this.enemy.width) &&
+            (bullet.posY < this.enemy.posY + this.enemy.heigth) &&
+            (bullet.posY + bullet.heigth > this.enemy.posY)) {
+                this.player.bullets.splice(idx, 1)
+            }
+            
+        });
     },
 
     isCollisionEnemy: function() {
@@ -111,6 +131,19 @@ const Game = {
                 (bullet.posY < this.player.posY + this.player.height)) {
                     console.log("Estas muerto")
                 }
+        })
+    },
+
+    removeEnemyBullets: function() {
+
+        this.enemy.enemyBullets.forEach((bullet, idx) =>{
+
+            if ((bullet.posX + bullet.width > this.player.posX)&&
+            (bullet.posX < this.player.posX + this.player.width) && 
+            (bullet.posY + bullet.width > this.player.posY) &&
+            (bullet.posY < this.player.posY + this.player.height)) {
+                this.enemy.enemyBullets.splice(idx, 1)
+            }
         })
     },
 
