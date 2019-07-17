@@ -5,10 +5,12 @@ class Player {
         this.gameHeight = h
 
         this.image = new Image()
-        this.image.src = "images/influencerLeft.png"
+        this.image.src = "images/influencerSprite.png"
 
         this.image.frames = 3
-        this.image.framesIndex = 0
+        this.image.framesY = 2
+        this.image.framesIndex_X = 0
+        this.image.framesIndex_Y = 1
 
         this.width = 60
         this.height = 110
@@ -33,27 +35,28 @@ class Player {
 
     draw(framesCounter) {
         this.ctx.drawImage(this.image,
-            this.image.framesIndex * Math.floor(this.image.width/this.image.frames),
-            0,
-            Math.floor(this.image.width/this.image.frames),
-            this.image.height,
+            this.image.framesIndex_X * Math.floor(this.image.width/this.image.frames), //inicio corte x
+            this.image.framesIndex_Y * Math.floor(this.image.height/this.image.framesY),//inicio corte y 
+            Math.floor(this.image.width/this.image.frames),                            // fin corte x
+            Math.floor(this.image.height/this.image.framesY),                                                       //fin corte y     
             this.posX, this.posY, this.width, this.height)
 
-        this.animate(framesCounter)
+       
+        
         this.bullets.forEach(bullet => bullet.draw())
     }
 
     animate(framesCounter){ 
         if(framesCounter%5==0) {
-          this.image.framesIndex++              
-          if(this.image.framesIndex>2) {
-            this.image.framesIndex = 0
+          this.image.framesIndex_X++              
+          if(this.image.framesIndex_X>2) {
+            this.image.framesIndex_X = 0
           }
         }
         
       }
 
-    move() {
+    move(framesCounter) {
                 
         if (this.posY < this.posY0) {
             this.posY += this.velY
@@ -65,10 +68,14 @@ class Player {
 
         if (this.keys.RIGHT_KEY.down && this.posX < this.gameWidth - this.width) {
             this.posX +=10
+            this.animate(framesCounter)
+            //this.framesIndex_Y = 1
         }
 
         if (this.keys.LEFT_KEY.down && this.posX >0){
             this.posX -=10
+            this.animate(framesCounter)
+            //this.framesIndex_Y = 0
         }
 
         if (this.keys.TOP_KEY.down && this.posY >= this.posY0) {
@@ -78,6 +85,18 @@ class Player {
 
         this.bullets.forEach(bullet => bullet.move())
     }
+
+    // isFloor() {
+
+    //     if (this.posY < this.posY0) {
+    //         this.posY += this.velY
+    //         this.velY += this.gravity
+    //     } else {
+    //         this.velY = 1
+    //         this.posY = this.posY0
+    //     }
+
+    // }
 
     shoot() {
 
@@ -104,11 +123,13 @@ class Player {
 
                 case this.keys.LEFT_KEY.key:
                     this.keys.LEFT_KEY.down = true
+                    this.image.framesIndex_Y= 0
 
                     break
 
                 case this.keys.RIGHT_KEY.key:
                     this.keys.RIGHT_KEY.down = true
+                    this.image.framesIndex_Y=1
 
                     break
 
@@ -129,13 +150,13 @@ class Player {
 
                 case this.keys.LEFT_KEY.key:
                      this.keys.LEFT_KEY.down = false
-
-                        break
+                    
+                    break
 
                 case this.keys.RIGHT_KEY.key:
                      this.keys.RIGHT_KEY.down = false
-    
-                        break
+                     
+                    break
             }
         }
     }

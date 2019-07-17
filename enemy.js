@@ -21,10 +21,6 @@ class Enemy {
         this.eLife = 10
     } 
 
-    // get enemyBullets() {
-    //     return this.enemyBullets
-    // }
-
     draw() {
 
         this.ctx.drawImage(this.image, this.posX, this.posY, this.width, this.height)

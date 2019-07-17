@@ -5,6 +5,9 @@ const Game = {
     height: undefined,
     fps: 60,
     framesCounter: 0,
+    platforms: [],
+    myPlatform: undefined,
+
     keys: {
         TOP_KEY: { key: 38, down: false},
         LEFT_KEY: { key: 37, down: false},
@@ -64,10 +67,12 @@ const Game = {
         this.lifeLine = new LifeLine(this.ctx)
         this.followers = new Followers(this.ctx, this.canvas.width)
         
-        this.topLeftPlatform = new Platform(this.ctx, "images/platform_3red.png", this.canvas.width , this.canvas.height, -200, this.canvas.height/2+30, 100)
-        this.bottomLeftPlatform = new Platform(this.ctx, "images/platform_4red.png", this.canvas.width , this.canvas.height, -170, this.canvas.height/2 + 130, 150)
-        this.topRigthPlatform = new Platform(this.ctx, "images/platform_3red.png", this.canvas.width , this.canvas.height, this.canvas.width - 120, this.canvas.height/2+30, 100)
-        this.bottomRigthPlatform = new Platform(this.ctx, "images/platform_4red.png", this.canvas.width , this.canvas.height, this.canvas.width -350, this.canvas.height/2 + 130, 150)
+        this.platforms.push(this.topLeftPlatform = new Platform(this.ctx, "images/platform_3red.png", this.canvas.width , this.canvas.height, -200, this.canvas.height/2+30, 100))
+        this.platforms.push(this.bottomLeftPlatform = new Platform(this.ctx, "images/platform_4red.png", this.canvas.width , this.canvas.height, -170, this.canvas.height/2 + 130, 150))
+        this.platforms.push(this.topRigthPlatform = new Platform(this.ctx, "images/platform_3red.png", this.canvas.width , this.canvas.height, this.canvas.width - 120, this.canvas.height/2+30, 100))
+        this.platforms.push(this.bottomRigthPlatform = new Platform(this.ctx, "images/platform_4red.png", this.canvas.width , this.canvas.height, this.canvas.width -350, this.canvas.height/2 + 130, 150))
+    
+        
     },
 
     drawAll: function() {
@@ -88,7 +93,7 @@ const Game = {
     },
 
     moveAll: function() {
-        this.player.move()
+        this.player.move(this.framesCounter)
         this.enemy.move()
         this.leftEnemy.moveLeft()
         this.rigthEnemy.moveRigth()
@@ -129,6 +134,7 @@ const Game = {
         this.isCollissionFlyingEnemies()
         this.removeEnemyBullets()
         this.removePlayerBullets()
+        this.isCollissionPlatform()
         
     },
 
@@ -216,8 +222,28 @@ const Game = {
         }
     },
 
-    playerWin: function() {
+    isCollissionPlatform() {
 
+        this.myPlatform = this.platforms.find((platf) => {
+            return this.player.posY + this.player.height >= platf.posY
+                && this.player.posY < platf.posY + platf.height
+                && this.player.posX + this.player.width-10 > platf.posX
+                && this.player.posX < platf.posX + platf.width
+               // && this.player.velY > 0
+        })
+
+        if (this.myPlatform) {
+            this.player.posY0 = this.myPlatform.posY - this.player.height
+            this.player.posY = this.player.posY0
+         } else {
+            this.player.posY0 = this.canvas.height - (this.player.height * 2)
+            
+        }
+
+    },
+
+    playerWin: function() {
+        clearInterval(this.interval)
     },
 
     gameOver: function() {

@@ -55,3 +55,10 @@ class Platform {
     //     //if(this.posX <= -200) this.velX *= -1
     // }
 }
+
+// class TopLeftPlatform extends Platform {
+
+//     constructor (){
+
+//     }
+// }
