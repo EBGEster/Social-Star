@@ -29,7 +29,8 @@ class Player {
 
         this.pLife = 5
 
-        this.timer = 4
+        // this.timer = 4
+        this.shootLock = false
 
     }
 
@@ -134,9 +135,21 @@ class Player {
                     break
 
                 case this.keys.SPACE:
-                    this.shoot()
-                //throttle (this.shoot, 5, this.timer)
+                    //this.shoot()
+                // throttle (this.shoot, 5, this.timer)
+                    // this.timer++
+                    // console.log(this.timer)
+    
+                    // if(this.timer == 5) {
+                    //     this.shoot()
+                    //     this.timer = 0
+                    // }
 
+                    if (!this.shootLock) {
+                        this.shoot()
+                        setTimeout(() => { this.shootLock = false }, 3000)
+                        this.shootLock = true
+                    }
                     break
             }
         }
@@ -160,7 +173,7 @@ class Player {
             }
         }
     }
-    
+
 
     // setListeners() {
     //     document.onkeydown = (e) => {
@@ -193,11 +206,11 @@ class Player {
     // }
 }
 
-// function throttle(func, wait, timer) {
-//      timer ++
+function throttle(func, wait, timer) {
+     timer ++
 
-//     if(timer == wait) {
-//         func()
-//     }
-// timer = 0
-// }
+    if(timer == wait) {
+        func()
+        timer = 0
+    }
+}

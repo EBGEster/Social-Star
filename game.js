@@ -67,7 +67,7 @@ const Game = {
         this.lifeLine = new LifeLine(this.ctx)
         this.followers = new Followers(this.ctx, this.canvas.width)
         
-        this.platforms.push(this.topLeftPlatform = new Platform(this.ctx, "images/platform_3red.png", this.canvas.width , this.canvas.height, -200, this.canvas.height/2+30, 100))
+        this.platforms.push(this.topLeftPlatform = new Platform(this.ctx, "images/platform_3red.png", this.canvas.width , this.canvas.height, -150, this.canvas.height/2+30, 100))
         this.platforms.push(this.bottomLeftPlatform = new Platform(this.ctx, "images/platform_4red.png", this.canvas.width , this.canvas.height, -170, this.canvas.height/2 + 130, 150))
         this.platforms.push(this.topRigthPlatform = new Platform(this.ctx, "images/platform_3red.png", this.canvas.width , this.canvas.height, this.canvas.width - 120, this.canvas.height/2+30, 100))
         this.platforms.push(this.bottomRigthPlatform = new Platform(this.ctx, "images/platform_4red.png", this.canvas.width , this.canvas.height, this.canvas.width -350, this.canvas.height/2 + 130, 150))

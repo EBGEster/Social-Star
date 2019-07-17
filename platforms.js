@@ -16,6 +16,7 @@ class Platform {
         this.image.src = img
 
         this.velX = 2
+        this.timeoutSet = false
     }
 
     draw() {
@@ -24,28 +25,26 @@ class Platform {
 
     move() {
         this.posX += this.velX
-        //console.log(this.posX)
+        
+        if (this.posX <= -150 || this.posX >= 150){
+            this.velX = 0
 
-        if (this.posX < -150 || this.posX >= 150){
-             this.velX = 0
-
-           if(this.posX >= 150 && this.posX <= 200 ){
-                setTimeout(() => {
-                    this.velX = -2
-                    
-
-                }, 5000)
-           } else if(this.posX <= -150 && this.posX >= -200) {
-                setTimeout(() => {
-                    this.velX = 2
-
-
-                }, 5000)
-           }
-
-            //console.log("cambio de direccion")
-            
-            
+            if (!this.timeoutSet) {
+                if (this.posX === 150 ) {
+                    setTimeout(() => {
+                        this.velX = -2
+                        this.timeoutSet = false
+                    }, 5000)
+                    this.timeoutSet = true
+                }
+                else if (this.posX === -150) {
+                    setTimeout(() => {
+                        this.velX = 2
+                        this.timeoutSet = false
+                    }, 5000)
+                    this.timeoutSet = true
+                }
+            }
         }
     }
 
@@ -56,9 +55,3 @@ class Platform {
     // }
 }
 
-// class TopLeftPlatform extends Platform {
-
-//     constructor (){
-
-//     }
-// }
