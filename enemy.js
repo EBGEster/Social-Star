@@ -3,18 +3,18 @@ class Enemy {
     constructor(ctx, canvasW, canvasH) {
         this.ctx = ctx
         this.gameWidth = canvasW
-        this.gameHeigth = canvasH
+        this.gameHeight = canvasH
         
         this.width = 150
-        this.heigth = 150
+        this.height = 150
 
-        this.posY = 50
+        this.posY = 60
         this.posX = this.gameWidth/2 - this.width
 
         this.velX = -3
 
         this.image = new Image()
-        this.image.src = "images/main_enemy.png"
+        this.image.src = "images/main_enemy1.png"
 
         this.enemyBullets = []
 
@@ -27,7 +27,7 @@ class Enemy {
 
     draw() {
 
-        this.ctx.drawImage(this.image, this.posX, this.posY, this.width, this.heigth)
+        this.ctx.drawImage(this.image, this.posX, this.posY, this.width, this.height)
         this.enemyBullets.forEach(bullet => bullet.draw())
     }
 
@@ -51,13 +51,13 @@ class Enemy {
 
     shoot() {
 
-        this.enemyBullets.push(new EnemyBullet(this.ctx, this.posX+this.width/2, this.posY+this.heigth/2, this.heigth))
+        this.enemyBullets.push(new EnemyBullet(this.ctx, this.posX+this.width/2, this.posY+this.height/2, this.height))
     }
 
     clearEnemyBullets() {
                
         this.enemyBullets.forEach( (obs, idx) => {
-            if(obs.posY>= this.gameHeigth) {
+            if(obs.posY>= this.gameHeight) {
             this.enemyBullets.splice(idx, 1)
             } 
         })        

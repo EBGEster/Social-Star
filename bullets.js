@@ -10,7 +10,7 @@ class Bullets {
         this.velX = 1
 
         this.width = 28
-        this.heigth = 40
+        this.height = 40
 
         this.image = new Image()
         this.image.src = "images/upload.png"
@@ -20,7 +20,7 @@ class Bullets {
 
     draw() {
 
-        this.ctx.drawImage(this.image, this.posX, this.posY, this.width, this.heigth)
+        this.ctx.drawImage(this.image, this.posX, this.posY, this.width, this.height)
     }
 
     move() {

@@ -32,6 +32,10 @@ const Game = {
             if (this.framesCounter % 200 == 0){
                 this.enemy.shoot()
             }
+
+            // if (this.framesCounter % 10== 0) {
+            //     this.movePlatforms()
+            // }
         
      
             this.clear()
@@ -40,6 +44,7 @@ const Game = {
             this.clearAll()
             this.isCollissionAll()
             this.checkLife()
+            this.movePlatforms()
             
 
         },1000/this.fps)
@@ -49,18 +54,36 @@ const Game = {
 
     reset: function() {
         this.background = new Background(this.ctx, this.width, this.height)
+
         this.player = new Player(this.ctx, this.canvas.width, this.canvas.height, this.keys)
         this.enemy = new Enemy(this.ctx, this.canvas.width, this.canvas.height)
+
         this.leftEnemy = new FlyingEnemie(this.ctx, "images/angry_icon.png", this.canvas.width, this.canvas.height, 0, this.height/2-25) 
         this.rigthEnemy = new FlyingEnemie(this.ctx, "images/words_angry.png", this.canvas.width, this.canvas.height, this.width-50, this.height/2-25)
+        
+        this.lifeLine = new LifeLine(this.ctx)
+        this.followers = new Followers(this.ctx, this.canvas.width)
+        
+        this.topLeftPlatform = new Platform(this.ctx, "images/platform_3red.png", this.canvas.width , this.canvas.height, -200, this.canvas.height/2+30, 100)
+        this.bottomLeftPlatform = new Platform(this.ctx, "images/platform_4red.png", this.canvas.width , this.canvas.height, -170, this.canvas.height/2 + 130, 150)
+        this.topRigthPlatform = new Platform(this.ctx, "images/platform_3red.png", this.canvas.width , this.canvas.height, this.canvas.width - 120, this.canvas.height/2+30, 100)
+        this.bottomRigthPlatform = new Platform(this.ctx, "images/platform_4red.png", this.canvas.width , this.canvas.height, this.canvas.width -350, this.canvas.height/2 + 130, 150)
     },
 
     drawAll: function() {
         this.background.draw()
-        this.player.draw()
+        this.player.draw(this.framesCounter)
         this.enemy.draw()
         this.leftEnemy.draw()
         this.rigthEnemy.draw()
+        this.lifeLine.draw(this.player.pLife)
+        this.followers.draw(this.enemy.eLife)
+        this.topLeftPlatform.draw()
+        this.bottomLeftPlatform.draw()
+        this.topRigthPlatform.draw()
+        this.bottomRigthPlatform.draw()
+        
+
 
     },
 
@@ -69,6 +92,14 @@ const Game = {
         this.enemy.move()
         this.leftEnemy.moveLeft()
         this.rigthEnemy.moveRigth()
+        
+    },
+
+    movePlatforms : function() {
+        this.topLeftPlatform.move()
+        //this.bottomLeftPlatform.move()
+        // this.topRigthPlatform.move()
+        // this.bottomRigthPlatform.move()
     },
 
     clear: function() {
@@ -107,8 +138,8 @@ const Game = {
 
             if ((bullet.posX + bullet.width > this.enemy.posX) &&
                 (bullet.posX < this.enemy.posX + this.enemy.width) &&
-                (bullet.posY < this.enemy.posY + this.enemy.heigth) &&
-                (bullet.posY + bullet.heigth > this.enemy.posY)){
+                (bullet.posY < this.enemy.posY + this.enemy.height) &&
+                (bullet.posY + bullet.height > this.enemy.posY)){
                 console.log("Colisión")
                 
                 this.enemy.eLife -= 1
@@ -127,8 +158,8 @@ const Game = {
 
             if ((bullet.posX + bullet.width > this.enemy.posX) &&
             (bullet.posX < this.enemy.posX + this.enemy.width) &&
-            (bullet.posY < this.enemy.posY + this.enemy.heigth) &&
-            (bullet.posY + bullet.heigth > this.enemy.posY)) {
+            (bullet.posY < this.enemy.posY + this.enemy.height) &&
+            (bullet.posY + bullet.height > this.enemy.posY)) {
                 this.player.bullets.splice(idx, 1)
             }
             
@@ -170,7 +201,8 @@ const Game = {
             (this.leftEnemy.posX < this.player.posX + this.player.width) &&
             (this.leftEnemy.posY + this.leftEnemy.width > this.player.posY) &&
             (this.leftEnemy.posY < this.player.posY + this.player.height)) {
-
+                this.player.pLife -= 0.005
+                this.leftEnemy.velY -=1
                 console.log("tocado")
         }
 
@@ -178,7 +210,8 @@ const Game = {
         (this.rigthEnemy.posX < this.player.posX + this.player.width) &&
         (this.rigthEnemy.posY + this.rigthEnemy.width > this.player.posY) &&
         (this.rigthEnemy.posY < this.player.posY + this.player.height)) {
-
+            this.player.pLife -= 0.005
+            this.rigthEnemy.velY -=1
             console.log("ay qué dolor")
         }
     },

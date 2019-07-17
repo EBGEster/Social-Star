@@ -2,17 +2,20 @@ class Player {
     constructor(ctx, w, h, keys) {
         this.ctx = ctx
         this.gameWidth = w
-        this.gameHeigth = h
+        this.gameHeight = h
 
         this.image = new Image()
-        this.image.src = "images/influencer.png"
+        this.image.src = "images/influencerLeft.png"
+
+        this.image.frames = 3
+        this.image.framesIndex = 0
 
         this.width = 60
         this.height = 110
 
         this.posX = this.gameWidth/2
-        this.posY = this.gameHeigth * .98 - this.height * 2
-        this.posY0 = this.gameHeigth * .98 - this.height * 2
+        this.posY = this.gameHeight * .98 - this.height * 2
+        this.posY0 = this.gameHeight * .98 - this.height * 2
 
         this.velY = 10
         this.gravity = 0.4
@@ -24,12 +27,31 @@ class Player {
 
         this.pLife = 5
 
+        this.timer = 4
+
     }
 
-    draw() {
-        this.ctx.drawImage(this.image, this.posX, this.posY, this.width, this.height)
+    draw(framesCounter) {
+        this.ctx.drawImage(this.image,
+            this.image.framesIndex * Math.floor(this.image.width/this.image.frames),
+            0,
+            Math.floor(this.image.width/this.image.frames),
+            this.image.height,
+            this.posX, this.posY, this.width, this.height)
+
+        this.animate(framesCounter)
         this.bullets.forEach(bullet => bullet.draw())
     }
+
+    animate(framesCounter){ 
+        if(framesCounter%5==0) {
+          this.image.framesIndex++              
+          if(this.image.framesIndex>2) {
+            this.image.framesIndex = 0
+          }
+        }
+        
+      }
 
     move() {
                 
@@ -50,8 +72,8 @@ class Player {
         }
 
         if (this.keys.TOP_KEY.down && this.posY >= this.posY0) {
-            this.posY -=15
-            this.velY -=8
+            this.posY -=20
+            this.velY -=10
         }
 
         this.bullets.forEach(bullet => bullet.move())
@@ -92,6 +114,7 @@ class Player {
 
                 case this.keys.SPACE:
                     this.shoot()
+                //throttle (this.shoot, 5, this.timer)
 
                     break
             }
@@ -149,3 +172,11 @@ class Player {
     // }
 }
 
+// function throttle(func, wait, timer) {
+//      timer ++
+
+//     if(timer == wait) {
+//         func()
+//     }
+// timer = 0
+// }

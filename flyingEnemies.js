@@ -3,10 +3,10 @@ class FlyingEnemie {
         
             this.ctx = ctx
             this.gameWidth = canvasW
-            this.gameHeigth = canvasH
+            this.gameHeight = canvasH
             
             this.width = 50
-            this.heigth = 50
+            this.height = 50
     
             this.posX = x//this.GameWidth/2 - this.width
             this.posY = y//this.GameHeigth/2-this.width
@@ -20,7 +20,7 @@ class FlyingEnemie {
     }
 
     draw() {
-        this.ctx.drawImage(this.image,this.posX, this.posY,this.width,this.heigth)
+        this.ctx.drawImage(this.image,this.posX, this.posY,this.width,this.height)
     }
 
     moveLeft(){
@@ -30,7 +30,7 @@ class FlyingEnemie {
         this.posY += this.velY
         //console.log(this.posY)
 
-        if (this.posY> this.gameHeigth - this.heigth || this.posY < 0) this.velY *= -1
+        if (this.posY> this.gameHeight - this.height || this.posY < 0) this.velY *= -1
         if (this.posX > this.gameWidth - this.width || this.posX < 0) this.velX *= -1
     }
 
@@ -42,7 +42,7 @@ class FlyingEnemie {
         this.posY -= this.velY
         //console.log(this.posY)
 
-        if (this.posY> this.gameHeigth - this.heigth || this.posY < 0) this.velY *= -1
+        if (this.posY> this.gameHeight - this.height || this.posY < 0) this.velY *= -1
         if (this.posX > this.gameWidth - this.width || this.posX < 0) this.velX *= -1
     }
 
