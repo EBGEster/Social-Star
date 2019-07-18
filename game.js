@@ -26,6 +26,7 @@ const Game = {
         this.canvas.width = this. width
         this.canvas.height = this.height
         this.start()
+        document.getElementById("fondo").play()
     },
 
     start: function() {
@@ -161,6 +162,7 @@ const Game = {
                 console.log("Colisión")
                 
                 this.enemy.eLife -= 1
+                document.getElementById("yes").play()
                 console.log("Enemy life" , this.enemy.eLife)
             }
 
@@ -195,6 +197,7 @@ const Game = {
                     console.log("Estas muerto")
 
                     this.player.pLife -= 1
+                    document.getElementById("dislike").play()
                     console.log(this.player.pLife)
                 }
         })
@@ -221,6 +224,7 @@ const Game = {
             (this.leftEnemy.posY < this.player.posY + this.player.height)) {
                 this.player.pLife -= 0.005
                 this.leftEnemy.velY -=1
+                document.getElementById("flying").play()
                 console.log("tocado")
         }
 
@@ -230,6 +234,7 @@ const Game = {
         (this.rigthEnemy.posY < this.player.posY + this.player.height)) {
             this.player.pLife -= 0.005
             this.rigthEnemy.velY -=1
+            document.getElementById("flying").play()
             console.log("ay qué dolor")
         }
     },
@@ -243,7 +248,7 @@ const Game = {
                 && this.player.posX < platf.posX + platf.width
                // && this.player.velY > 0
         })
-        console.log(this.myPlatform, this.player)
+        // console.log(this.myPlatform, this.player)
         if (this.myPlatform && (this.player.posY+this.player.height<this.myPlatform.posY+20)) {
             this.player.posY0 = this.myPlatform.posY - this.player.height
             this.player.posY = this.player.posY0
@@ -264,6 +269,7 @@ const Game = {
             (bonus.posY < this.player.posY + this.player.height)) {
                 this.myBonus.splice(idx, 1)
                 this.player.pLife += 1
+                document.getElementById("loveit").play()
                 console.log("Suma vida")
             }
 
@@ -285,6 +291,16 @@ const Game = {
             this.ctx.drawImage(this.imgGameOver, this.canvas.width/2, this.canvas.height/2, this.canvas.width/2, this.canvas.height/2)
         
         }
+
+        document.getElementById("gameover").play()
+        // this.imgGameOver2 = new Image()
+        // this.imgGameOver2.src = "images/fail.gif"
+
+        // this.imgGameOver2.onload = () => {
+            
+        //     this.ctx.drawImage(this.imgGameOver2, 100, 100, 100, 100)
+        
+        // }
        clearInterval(this.interval)    
     }
 }

@@ -1,3 +1,5 @@
+function makeEven(x) { return x % 2 === 0 ? x : x+1 }
+
 class Platform {
 
     constructor(ctx, img, canvasW, canvasH, x, y, width){
@@ -6,7 +8,7 @@ class Platform {
         this.gameWidth = canvasW
         this.gameHeight = canvasH
 
-        this.posX = x
+        this.posX = makeEven(x)
         this.posY = y
 
         this.width = width
@@ -17,6 +19,10 @@ class Platform {
 
         this.velX = 2
         this.timeoutSet = false
+
+        this.platRightStopPos = [
+            makeEven(this.gameWidth - this.width) - 30,
+            makeEven(this.gameWidth) + 150]
     }
 
     draw() {
@@ -51,19 +57,18 @@ class Platform {
     moveB() {
         this.posX -= this.velX
         
-        console.log(this.gameWidth - this.width - 30)
-        if (this.posX >= this.gameWidth + 150 || this.posX <= this.gameWidth - this.width - 30){
+        if (this.posX === this.platRightStopPos[1] || this.posX === this.platRightStopPos[0]){
             this.velX = 0
 
             if (!this.timeoutSet) {
-                if (this.posX === 856) {
+                if (this.posX === this.platRightStopPos[1]) {
                     setTimeout(() => {
                         this.velX = 2
                         this.timeoutSet = false
                     }, 5000)
                     this.timeoutSet = true
                 }
-                else if (this.posX === 906) {
+                else if (this.posX === this.platRightStopPos[0]) {
                     setTimeout(() => {
                         this.velX = -2
                         this.timeoutSet = false
