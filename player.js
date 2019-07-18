@@ -206,11 +206,11 @@ class Player {
     // }
 }
 
-function throttle(func, wait, timer) {
-     timer ++
+// function throttle(func, wait, timer) {
+//      timer ++
 
-    if(timer == wait) {
-        func()
-        timer = 0
-    }
-}
+//     if(timer == wait) {
+//         func()
+//         timer = 0
+//     }
+// }

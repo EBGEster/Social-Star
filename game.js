@@ -7,12 +7,15 @@ const Game = {
     framesCounter: 0,
     platforms: [],
     myPlatform: undefined,
-
+    isBonus: false,
+    myBonus: [],
+    
+    
     keys: {
         TOP_KEY: { key: 38, down: false},
         LEFT_KEY: { key: 37, down: false},
         RIGHT_KEY: {key: 39, down: false},
-        SPACE: 32
+        SPACE: 65
     },
 
     init: function(id) {
@@ -67,11 +70,13 @@ const Game = {
         this.lifeLine = new LifeLine(this.ctx)
         this.followers = new Followers(this.ctx, this.canvas.width)
         
+        this.platforms.push(this.bottomLeftPlatform = new Platform(this.ctx, "images/platform_4red.png", this.canvas.width , this.canvas.height, -150, this.canvas.height/2 + 100, 150))
+        this.platforms.push(this.bottomRigthPlatform = new Platform(this.ctx, "images/platform_4red.png", this.canvas.width , this.canvas.height, this.canvas.width +150, this.canvas.height/2 + 100, 150))
+        this.platforms.push(this.topRigthPlatform = new Platform(this.ctx, "images/platform_3red.png", this.canvas.width , this.canvas.height, this.canvas.width + 150, this.canvas.height/2+30, 100))
         this.platforms.push(this.topLeftPlatform = new Platform(this.ctx, "images/platform_3red.png", this.canvas.width , this.canvas.height, -150, this.canvas.height/2+30, 100))
-        this.platforms.push(this.bottomLeftPlatform = new Platform(this.ctx, "images/platform_4red.png", this.canvas.width , this.canvas.height, -170, this.canvas.height/2 + 130, 150))
-        this.platforms.push(this.topRigthPlatform = new Platform(this.ctx, "images/platform_3red.png", this.canvas.width , this.canvas.height, this.canvas.width - 120, this.canvas.height/2+30, 100))
-        this.platforms.push(this.bottomRigthPlatform = new Platform(this.ctx, "images/platform_4red.png", this.canvas.width , this.canvas.height, this.canvas.width -350, this.canvas.height/2 + 130, 150))
     
+        this.myBonus.push(this.leftBonus = new Bonus(this.ctx, 30))
+        this.myBonus.push(this.rigthBonus = new Bonus(this.ctx, this.canvas.width - 80))
         
     },
 
@@ -87,9 +92,15 @@ const Game = {
         this.bottomLeftPlatform.draw()
         this.topRigthPlatform.draw()
         this.bottomRigthPlatform.draw()
+        this.myBonus.forEach(bonus => bonus.draw())   
+        // if (!this.isBonus) {
+        //     setTimeout(() => { 
+        //         this.leftBonus.draw()
+        //         console.log("soy el bonus")
+        //         this.isBonus = false }, 10000)
+        //     this.isBonuss = true
+        // }
         
-
-
     },
 
     moveAll: function() {
@@ -102,9 +113,9 @@ const Game = {
 
     movePlatforms : function() {
         this.topLeftPlatform.move()
-        //this.bottomLeftPlatform.move()
-        // this.topRigthPlatform.move()
-        // this.bottomRigthPlatform.move()
+        this.bottomLeftPlatform.move()
+        this.topRigthPlatform.moveB()
+        this.bottomRigthPlatform.moveB()
     },
 
     clear: function() {
@@ -135,6 +146,7 @@ const Game = {
         this.removeEnemyBullets()
         this.removePlayerBullets()
         this.isCollissionPlatform()
+        this.isCollissionBonus()
         
     },
 
@@ -225,14 +237,14 @@ const Game = {
     isCollissionPlatform() {
 
         this.myPlatform = this.platforms.find((platf) => {
-            return this.player.posY + this.player.height >= platf.posY
+            return this.player.posY + this.player.height > platf.posY
                 && this.player.posY < platf.posY + platf.height
-                && this.player.posX + this.player.width-10 > platf.posX
+                && this.player.posX + this.player.width > platf.posX
                 && this.player.posX < platf.posX + platf.width
                // && this.player.velY > 0
         })
-
-        if (this.myPlatform) {
+        console.log(this.myPlatform, this.player)
+        if (this.myPlatform && (this.player.posY+this.player.height<this.myPlatform.posY+20)) {
             this.player.posY0 = this.myPlatform.posY - this.player.height
             this.player.posY = this.player.posY0
          } else {
@@ -242,11 +254,37 @@ const Game = {
 
     },
 
+    isCollissionBonus() {
+        
+        this.myBonus.forEach((bonus,idx) => {
+
+            if ((bonus.posX + bonus.width > this.player.posX) &&
+            (bonus.posX < this.player.posX + this.player.width) &&
+            (bonus.posY + bonus.width > this.player.posY) &&
+            (bonus.posY < this.player.posY + this.player.height)) {
+                this.myBonus.splice(idx, 1)
+                this.player.pLife += 1
+                console.log("Suma vida")
+            }
+
+        })
+               
+    },
+
     playerWin: function() {
         clearInterval(this.interval)
     },
 
     gameOver: function() {
-        clearInterval(this.interval)
+        
+        this.imgGameOver = new Image()
+        this.imgGameOver.src = "images/failed.png"
+
+        this.imgGameOver.onload = () => {
+            
+            this.ctx.drawImage(this.imgGameOver, this.canvas.width/2, this.canvas.height/2, this.canvas.width/2, this.canvas.height/2)
+        
+        }
+       clearInterval(this.interval)    
     }
 }

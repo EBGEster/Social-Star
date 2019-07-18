@@ -26,11 +26,11 @@ class Platform {
     move() {
         this.posX += this.velX
         
-        if (this.posX <= -150 || this.posX >= 150){
+        if (this.posX <= -150 || this.posX >= 30){
             this.velX = 0
 
             if (!this.timeoutSet) {
-                if (this.posX === 150 ) {
+                if (this.posX === 30 ) {
                     setTimeout(() => {
                         this.velX = -2
                         this.timeoutSet = false
@@ -48,10 +48,31 @@ class Platform {
         }
     }
 
-    // setVel() {
-    //     this.velX = 2
-    //     this.velX *=-1
-    //     //if(this.posX <= -200) this.velX *= -1
-    // }
+    moveB() {
+        this.posX -= this.velX
+        
+        console.log(this.gameWidth - this.width - 30)
+        if (this.posX >= this.gameWidth + 150 || this.posX <= this.gameWidth - this.width - 30){
+            this.velX = 0
+
+            if (!this.timeoutSet) {
+                if (this.posX === 856) {
+                    setTimeout(() => {
+                        this.velX = 2
+                        this.timeoutSet = false
+                    }, 5000)
+                    this.timeoutSet = true
+                }
+                else if (this.posX === 906) {
+                    setTimeout(() => {
+                        this.velX = -2
+                        this.timeoutSet = false
+                    }, 5000)
+                    this.timeoutSet = true
+                }
+            }
+        }
+    }
+
 }
 
