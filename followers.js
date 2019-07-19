@@ -45,12 +45,12 @@ class Followers  {
             this.ctx.drawImage(this.image3, this.posX - this.width *1.5, this.posY, this.width, this.height)
             
         }
-        else if(enemyLife >= 1) {
+        else if(enemyLife >= 2) {
             this.ctx.drawImage(this.image4, this.posX - this.width *1.5, this.posY, this.width, this.height)
             
 
         }
-        else if (enemyLife >= 0) {
+        else if (enemyLife == 1) {
             this.ctx.drawImage(this.image5, this.posX - this.width *1.5, this.posY, this.width, this.height)
         }
     }

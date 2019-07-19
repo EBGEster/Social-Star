@@ -38,12 +38,19 @@ const Game = {
             this.framesCounter++
             if (this.framesCounter > 1000) this.framesCounter = 0
 
-            if (this.framesCounter % 200 == 0){
+            if (this.enemy.eLife > 5){
+                if (this.framesCounter % 200 == 0){
                 this.enemy.shoot()
             }
+            } else {
+                if (this.framesCounter % 150 == 0){
+                    this.enemy.shoot()
+                }
+            }
+            
 
             if (this.framesCounter % 100 == 0){
-                counter++
+                this.counter++
             }
 
             // if (this.framesCounter % 10== 0) {
@@ -295,6 +302,7 @@ const Game = {
         }
 
         document.getElementById("win").play()
+        document.getElementById("imgwin").classList.remove("on")
         clearInterval(this.interval)
     },
 
@@ -320,13 +328,14 @@ const Game = {
         
         // }
        clearInterval(this.interval)
-       
+       let failed = document.getElementById("failed")
+       failed.classList.remove("on")
         let button = document.getElementById("buttonStart")
             button.classList.remove('on')
         button.onclick = () => {
             document.getElementById("start").play()
             button.classList.add('on')
-            
+            failed.classList.add("on")
             Game.init("canvas")
             
         

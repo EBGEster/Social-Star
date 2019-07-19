@@ -47,7 +47,7 @@ class Enemy {
 
     shoot() {
 
-        this.enemyBullets.push(new EnemyBullet(this.ctx, this.posX+this.width/2, this.posY+this.height/2, this.height))
+        this.enemyBullets.push(new EnemyBullet(this.ctx, this.posX+this.width/2, this.posY+this.height/2, this.height, this.eLife))
     }
 
     clearEnemyBullets() {
