@@ -9,6 +9,7 @@ const Game = {
     myPlatform: undefined,
     isBonus: false,
     myBonus: [],
+    counter: 0,
     
     
     keys: {
@@ -27,7 +28,7 @@ const Game = {
         this.canvas.height = this.height
         this.start()
         document.getElementById("fondo").play()
-        document.getElementById("fondo2").play()
+        
     },
 
     start: function() {
@@ -39,6 +40,10 @@ const Game = {
 
             if (this.framesCounter % 200 == 0){
                 this.enemy.shoot()
+            }
+
+            if (this.framesCounter % 100 == 0){
+                counter++
             }
 
             // if (this.framesCounter % 10== 0) {
@@ -84,17 +89,17 @@ const Game = {
 
     drawAll: function() {
         this.background.draw()
-        this.player.draw(this.framesCounter)
-        this.enemy.draw()
-        this.leftEnemy.draw()
-        this.rigthEnemy.draw()
-        this.lifeLine.draw(this.player.pLife)
-        this.followers.draw(this.enemy.eLife)
+        this.myBonus.forEach(bonus => bonus.draw())   
         this.topLeftPlatform.draw()
         this.bottomLeftPlatform.draw()
-        this.topRigthPlatform.draw()
         this.bottomRigthPlatform.draw()
-        this.myBonus.forEach(bonus => bonus.draw())   
+        this.topRigthPlatform.draw()
+        this.enemy.draw()
+        this.lifeLine.draw(this.player.pLife)
+        this.leftEnemy.draw()
+        this.rigthEnemy.draw()
+        this.followers.draw(this.enemy.eLife)
+        this.player.draw(this.framesCounter)
         // if (!this.isBonus) {
         //     setTimeout(() => { 
         //         this.leftBonus.draw()
@@ -132,11 +137,11 @@ const Game = {
 
     checkLife: function() {
 
-        if (this.player.pLife < 0){
+        if (this.player.pLife <= 0){
             this.gameOver()
         }
 
-        if (this.enemy.eLife < 0){
+        if (this.enemy.eLife <= 0){
             this.playerWin()
         }
     },
@@ -223,7 +228,7 @@ const Game = {
             (this.leftEnemy.posX < this.player.posX + this.player.width) &&
             (this.leftEnemy.posY + this.leftEnemy.width > this.player.posY) &&
             (this.leftEnemy.posY < this.player.posY + this.player.height)) {
-                this.player.pLife -= 0.005
+                this.player.pLife -= 0.09
                 this.leftEnemy.velY -=1
                 document.getElementById("flying").play()
                 console.log("tocado")
@@ -233,7 +238,7 @@ const Game = {
         (this.rigthEnemy.posX < this.player.posX + this.player.width) &&
         (this.rigthEnemy.posY + this.rigthEnemy.width > this.player.posY) &&
         (this.rigthEnemy.posY < this.player.posY + this.player.height)) {
-            this.player.pLife -= 0.005
+            this.player.pLife -= 0.09
             this.rigthEnemy.velY -=1
             document.getElementById("flying").play()
             console.log("ay qué dolor")

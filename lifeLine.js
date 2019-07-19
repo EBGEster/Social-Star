@@ -18,13 +18,13 @@ class LifeLine  {
 
         this.ctx.drawImage(this.image, this.posX - 30, 20, 25, 40)
         
-        if (playerLife >= 2) {
-            this.ctx.fillStyle = "green"
+        if (playerLife >= 3) {
+            this.ctx.fillStyle = "#99DE4F"
         } 
-        else if (playerLife < 2) {
-            this.ctx.fillStyle = "red"
+        else if (playerLife < 3) {
+            this.ctx.fillStyle = "#EE312B"
         }
 
-        this.ctx.fillRect(this.posX, this.posY, playerLife * 100, this.height)
+        this.ctx.fillRect(this.posX, this.posY, playerLife * 50, this.height)
     }
 }

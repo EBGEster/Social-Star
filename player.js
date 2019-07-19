@@ -27,7 +27,7 @@ class Player {
 
         this.bullets = []
 
-        this.pLife = 5
+        this.pLife = 10
 
         // this.timer = 4
         this.shootLock = false
