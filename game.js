@@ -278,6 +278,17 @@ const Game = {
     },
 
     playerWin: function() {
+
+        this.imgWin = new Image()
+        this.imgWin.src = "images/win.png"
+
+        this.imgWin.onload = () => {
+            
+            this.ctx.drawImage(this.imgWin, this.canvas.width/2, this.canvas.height/2-50, this.canvas.width/2, this.canvas.height/2+50)
+        
+        }
+
+        document.getElementById("win").play()
         clearInterval(this.interval)
     },
 
@@ -293,6 +304,7 @@ const Game = {
         }
 
         document.getElementById("gameover").play()
+        document.getElementById("fondo").parentNode.removeChild(document.getElementById("fondo"))
         // this.imgGameOver2 = new Image()
         // this.imgGameOver2.src = "images/fail.gif"
 
@@ -301,6 +313,17 @@ const Game = {
         //     this.ctx.drawImage(this.imgGameOver2, 100, 100, 100, 100)
         
         // }
-       clearInterval(this.interval)    
+       clearInterval(this.interval)
+       
+        let button = document.getElementById("buttonStart")
+            button.classList.remove('on')
+        button.onclick = () => {
+            document.getElementById("start").play()
+            button.classList.add('on')
+            
+            Game.init("canvas")
+        
+        
+    }    
     }
 }

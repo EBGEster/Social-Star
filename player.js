@@ -146,7 +146,7 @@ class Player {
                     // }
 
                     if (!this.shootLock) {
-                        document.getElementById("disparo").play()
+                        // document.getElementById("disparo").play()
                         this.shoot()
                         setTimeout(() => { this.shootLock = false }, 3000)
                         this.shootLock = true
