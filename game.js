@@ -27,6 +27,7 @@ const Game = {
         this.canvas.height = this.height
         this.start()
         document.getElementById("fondo").play()
+        document.getElementById("fondo2").play()
     },
 
     start: function() {
@@ -304,7 +305,7 @@ const Game = {
         }
 
         document.getElementById("gameover").play()
-        document.getElementById("fondo").parentNode.removeChild(document.getElementById("fondo"))
+        //document.getElementById("fondo").parentNode.removeChild(document.getElementById("fondo"))
         // this.imgGameOver2 = new Image()
         // this.imgGameOver2.src = "images/fail.gif"
 
@@ -322,8 +323,8 @@ const Game = {
             button.classList.add('on')
             
             Game.init("canvas")
+            
         
-        
-    }    
+        }    
     }
 }
